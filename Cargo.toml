@@ -1,12 +1,14 @@
 [package]
-name = "json-value"
+name = "json-elem"
 version = "0.1.0"
 edition = "2021"
 authors = ["Lorenzo Leonardo <enzotechcomputersolutions@gmail.com>"]
 license = "MIT"
-description = "Manage JSON string as value"
-repository = "https://github.com/LorenzoLeonardo/json-value"
-homepage = "https://github.com/LorenzoLeonardo/json-value"
+description = "Manage JSON string as element."
+repository = "https://github.com/LorenzoLeonardo/json-elem"
+homepage = "https://github.com/LorenzoLeonardo/json-elem"
+documentation = "https://docs.rs/json-elem"
+readme = "README.md"
 
 [dependencies]
 serde = "1.0"

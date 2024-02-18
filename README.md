@@ -1,8 +1,8 @@
-# json-value
+# json-elem
 
-Manages JSON stream into values.
+Manages JSON stream into element.
 
-[![Latest Version](https://img.shields.io/crates/v/json-value.svg)](https://crates.io/crates/json-value)
-[![License](https://img.shields.io/github/license/LorenzoLeonardo/json-value.svg)](LICENSE-MIT)
-[![Documentation](https://docs.rs/json-value/badge.svg)](https://docs.rs/json-value)
-[![Build Status](https://github.com/LorenzoLeonardo/json-value/workflows/Rust/badge.svg)](https://github.com/LorenzoLeonardo/json-value/actions)
+[![Latest Version](https://img.shields.io/crates/v/json-elem.svg)](https://crates.io/crates/json-elem)
+[![License](https://img.shields.io/github/license/LorenzoLeonardo/json-elem.svg)](LICENSE-MIT)
+[![Documentation](https://docs.rs/json-elem/badge.svg)](https://docs.rs/json-elem)
+[![Build Status](https://github.com/LorenzoLeonardo/json-elem/workflows/Rust/badge.svg)](https://github.com/LorenzoLeonardo/json-elem/actions)

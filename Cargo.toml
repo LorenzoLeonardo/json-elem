@@ -1,0 +1,17 @@
+[package]
+name = "json-value"
+version = "0.1.0"
+edition = "2021"
+authors = ["Lorenzo Leonardo <enzotechcomputersolutions@gmail.com>"]
+license = "MIT"
+description = "Manage JSON string as value"
+repository = "https://github.com/LorenzoLeonardo/json-value"
+homepage = "https://github.com/LorenzoLeonardo/json-value"
+
+[dependencies]
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+
+[dev-dependencies]
+test-case = "3.3"

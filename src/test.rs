@@ -245,3 +245,89 @@ fn json_elem_convert_from_any_type_with_deserialize_downed() {
         panic!("Invalid value");
     }
 }
+
+#[test]
+fn test_from_json_string_to_jsonelem() {
+    let given = r#"{"mainkey":{"key1":["test val",true,123456789,12345.6789]}}"#;
+    let result = JsonElem::try_from(given).unwrap();
+
+    let mut expected = HashMap::new();
+    let mut hash = HashMap::new();
+    hash.insert(
+        "key1".into(),
+        JsonElem::Vec(vec![
+            JsonElem::String("test val".to_string()),
+            JsonElem::Bool(true),
+            JsonElem::Integer(123456789),
+            JsonElem::Float(12345.6789),
+        ]),
+    );
+    expected.insert("mainkey".into(), JsonElem::HashMap(hash));
+
+    println!("{:?}", result);
+    assert_eq!(JsonElem::HashMap(expected), result);
+}
+
+#[test]
+fn test_from_json_slice_to_jsonelem() {
+    let given = r#"{"mainkey":{"key1":["test val",true,123456789,12345.6789]}}"#.as_bytes();
+    let result = JsonElem::try_from(given).unwrap();
+
+    let mut expected = HashMap::new();
+    let mut hash = HashMap::new();
+    hash.insert(
+        "key1".into(),
+        JsonElem::Vec(vec![
+            JsonElem::String("test val".to_string()),
+            JsonElem::Bool(true),
+            JsonElem::Integer(123456789),
+            JsonElem::Float(12345.6789),
+        ]),
+    );
+    expected.insert("mainkey".into(), JsonElem::HashMap(hash));
+
+    assert_eq!(JsonElem::HashMap(expected), result);
+}
+
+#[test]
+fn test_from_jsonelem_to_json_string() {
+    let mut given = HashMap::new();
+    let mut hash = HashMap::new();
+    hash.insert(
+        "key1".into(),
+        JsonElem::Vec(vec![
+            JsonElem::String("test val".to_string()),
+            JsonElem::Bool(true),
+            JsonElem::Integer(123456789),
+            JsonElem::Float(12345.6789),
+        ]),
+    );
+    given.insert("mainkey".into(), JsonElem::HashMap(hash));
+
+    let given = JsonElem::HashMap(given);
+    let expected = r#"{"mainkey":{"key1":["test val",true,123456789,12345.6789]}}"#;
+    let result: String = given.try_into().unwrap();
+
+    assert_eq!(expected, result.as_str());
+}
+
+#[test]
+fn test_from_jsonelem_to_json_slice() {
+    let mut given = HashMap::new();
+    let mut hash = HashMap::new();
+    hash.insert(
+        "key1".into(),
+        JsonElem::Vec(vec![
+            JsonElem::String("test val".to_string()),
+            JsonElem::Bool(true),
+            JsonElem::Integer(123456789),
+            JsonElem::Float(12345.6789),
+        ]),
+    );
+    given.insert("mainkey".into(), JsonElem::HashMap(hash));
+
+    let given = JsonElem::HashMap(given);
+    let expected = r#"{"mainkey":{"key1":["test val",true,123456789,12345.6789]}}"#.as_bytes();
+    let result: Vec<u8> = given.try_into().unwrap();
+    assert_eq!(expected, result.as_slice());
+}

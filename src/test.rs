@@ -331,3 +331,30 @@ fn test_from_jsonelem_to_json_slice() {
     let result: Vec<u8> = given.try_into().unwrap();
     assert_eq!(expected, result.as_slice());
 }
+
+#[test]
+fn test_null() {
+    #[derive(Serialize, Deserialize, Debug, PartialEq)]
+    struct CallMethod {
+        object: String,
+        method: String,
+        param: JsonElem,
+    }
+
+    let call = CallMethod {
+        object: "my_object".to_string(),
+        method: "my_function".to_string(),
+        param: JsonElem::Null,
+    };
+    assert_eq!(
+        r#"{"object":"my_object","method":"my_function","param":null}"#.to_string(),
+        serde_json::to_string(&call).unwrap()
+    );
+
+    let output = serde_json::from_slice::<CallMethod>(
+        r#"{"object":"my_object","method":"my_function","param":null}"#.as_bytes(),
+    )
+    .unwrap();
+
+    assert_eq!(call, output);
+}

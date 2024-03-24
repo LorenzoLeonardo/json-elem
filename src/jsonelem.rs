@@ -8,6 +8,7 @@ use crate::error::Error;
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(untagged)]
 pub enum JsonElem {
+    Null,
     Integer(i32),
     Float(f64),
     Bool(bool),
@@ -71,6 +72,7 @@ impl TryInto<Vec<u8>> for JsonElem {
 impl Display for JsonElem {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            JsonElem::Null => write!(f, "{}", JsonElem::Null),
             JsonElem::Integer(val) => write!(f, "{}", val),
             JsonElem::Float(val) => write!(f, "{}", val),
             JsonElem::Bool(val) => write!(f, "{}", val),

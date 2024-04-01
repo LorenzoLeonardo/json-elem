@@ -31,6 +31,35 @@ impl JsonElem {
         let val: T = serde_json::from_str(&val).map_err(Error::SerdeJson)?;
         Ok(val)
     }
+
+    pub fn print(&self, indent: usize) {
+        print!("result : ");
+        self.print_recursive(indent);
+    }
+
+    fn print_recursive(&self, indent: usize) {
+        match self {
+            JsonElem::Null => println!("null"),
+            JsonElem::Bool(b) => println!(": b {}", b),
+            JsonElem::Integer(n) => println!(": i {}", n),
+            JsonElem::String(s) => println!(": {}", s),
+            JsonElem::Vec(arr) => {
+                println!("List");
+                for (n, element) in arr.iter().enumerate() {
+                    print!("{}{}", " ".repeat(indent + 2), n);
+                    element.print_recursive(indent + 2);
+                }
+            }
+            JsonElem::Float(f) => println!(": f {}", f),
+            JsonElem::HashMap(obj) => {
+                println!("Map");
+                for (key, val) in obj.iter() {
+                    print!("{}{} : ", " ".repeat(indent + 2), key);
+                    val.print_recursive(indent + 2);
+                }
+            }
+        }
+    }
 }
 
 /// Converts from String to JsonElem

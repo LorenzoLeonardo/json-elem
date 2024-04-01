@@ -358,3 +358,56 @@ fn test_null() {
 
     assert_eq!(call, output);
 }
+
+#[test]
+fn test_recursive_print() {
+    #[derive(Serialize, Deserialize, Debug, PartialEq)]
+    struct Provider {
+        year: i32,
+        process: String,
+        provider: String,
+        authorization_endpoint: String,
+        token_endpoint: String,
+        device_auth_endpoint: String,
+        scopes: Vec<String>,
+        client_id: String,
+        #[serde(skip_serializing_if = "Option::is_none")]
+        client_secret: Option<String>,
+        client_map: HashMap<String, JsonElem>,
+    }
+
+    let mut hash = HashMap::new();
+    hash.insert(
+        "key1".into(),
+        JsonElem::Vec(vec![
+            JsonElem::String("test val".to_string()),
+            JsonElem::Bool(true),
+            JsonElem::Integer(123456789),
+            JsonElem::Float(12345.6789),
+        ]),
+    );
+    let given = Provider {
+        year: 2024,
+        process: String::from("process name"),
+        provider: String::from("provider name"),
+        authorization_endpoint: String::from(
+            "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+        ),
+        token_endpoint: String::from("https://login.microsoftonline.com/common/oauth2/v2.0/token"),
+        device_auth_endpoint: String::from(
+            "https://login.microsoftonline.com/common/oauth2/v2.0/devicecode",
+        ),
+        scopes: vec![
+            String::from("offline_access"),
+            String::from("https://outlook.office.com/SMTP.Send"),
+            String::from("https://outlook.office.com/User.Read"),
+        ],
+        client_id: String::from("client-id-12345"),
+        client_secret: Some(String::from("secret-12345")),
+        client_map: hash,
+    };
+
+    let result = JsonElem::convert_from(&given).unwrap();
+
+    result.print(0);
+}
